@@ -1,0 +1,17 @@
+{
+  "name": "node-logger",
+  "version": "1.0.0",
+  "description": "Logger for nodejs app",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc-builder prod"
+  },
+  "module": "build/index.js",
+  "author": "FragnaroK",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "chalk": "^4.1.2"
+  }
+}
