@@ -7,10 +7,24 @@ interface LoggerInterface {
     i: (message: string, ...args: any[]) => void;
 }
 
+interface LogCollection {
+    error: string[];
+    info: string[];
+    debug: string[];
+    log: string[];
+}
+
 export default class Logger implements LoggerInterface {
- 
+
     private origin: string;
     private debugMode: boolean = false;
+
+    public logs: LogCollection = {
+        error: [],
+        info: [],
+        debug: [],
+        log: []
+    }
 
     constructor(origin: string, debugMode: boolean = false) {
         this.origin = origin;
@@ -21,47 +35,43 @@ export default class Logger implements LoggerInterface {
         return chalk.gray(`[${this.origin}]`) + chalk.bold(' > ') + message;
     }
 
+    private logToCollection(type: keyof LogCollection, message: string, ...args: any[]) {
+        if (this.logs[type].length > 50) {
+            this.logs[type].shift();
+        }
+
+        this.logs[type].push(message);
+    }
+
     setDebugMode(mode: boolean) {
         this.debugMode = mode;
     }
 
     l(message: string, ...args: any[]) {
-        console.log(
-            this.formatedMessage(
-                chalk.gray(message)
-            ),
-            ...args
-        );
+        const log = this.formatedMessage(chalk.gray(message))
+        console.log(log, ...args);
+        this.logToCollection("log", log, ...args)
+
     }
 
     e(message: string, ...args: any[]) {
-        console.error(
-            this.formatedMessage(
-                chalk.redBright(message)
-            ),
-            ...args
-        );
+        const log = this.formatedMessage(chalk.redBright(message));
+        console.error(log, ...args);
+        this.logToCollection("error", log, ...args)
     }
 
     d(message: string, ...args: any[]) {
-       if (this.debugMode) {
-           console.debug(
-            chalk.dim('(DEBUG)'),
-                this.formatedMessage(
-                    chalk.blueBright(message)
-                ),
-                ...args
-           );
-       }
+        if (this.debugMode) {
+            const log = this.formatedMessage(chalk.blueBright(message))
+            console.debug(chalk.dim('(DEBUG)'), log, ...args);
+            this.logToCollection("debug", log, ...args)
+        }
     }
 
     i(message: string, ...args: any[]) {
-        console.info(
-            this.formatedMessage(
-                chalk.cyanBright(message)
-            ),
-            ...args
-        );
+        const log = this.formatedMessage(chalk.cyanBright(message))
+        console.info(log, ...args);
+        this.logToCollection("info", log, ...args)
     }
 
     blank(lines: number = 1) {
