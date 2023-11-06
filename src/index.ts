@@ -40,7 +40,7 @@ export default class Logger implements LoggerInterface {
             this.logs[type].shift();
         }
 
-        this.logs[type].push(message);
+        this.logs[type].push(`${message} - ${args.join(' ')}`);
     }
 
     setDebugMode(mode: boolean) {
