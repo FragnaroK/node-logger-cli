@@ -11,7 +11,7 @@
   "author": "FragnaroK",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.2"
+    "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@fragnarok/tsc-builder": "^1.0.5", 
