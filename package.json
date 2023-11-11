@@ -10,9 +10,12 @@
   },
   "author": "FragnaroK",
   "license": "MIT",
-  "devDependencies": {
-    "typescript": "^5.2.2",
+  "dependencies": {
     "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@fragnarok/tsc-builder": "^1.0.5", 
+    "typescript": "^5.2.2"
   },
   "files": [
     "build/**/*"
